@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net"
-	"os"
 )
 
 const (
@@ -23,22 +21,24 @@ func setupRedisServer() {
 	connection, error := listener.Accept()
 	if error != nil {
 		fmt.Println("Accepting connection failed ", error)
+	} else {
+		fmt.Println("Connection Accepted")
 	}
 	defer connection.Close()
 
 	for {
-		buffer := make([]byte, 1024)
-
-		_, err := connection.Read(buffer)
+		resp := NewResp(connection)
+		// fmt.Println("New Resp object created")
+		value, err := resp.Read()
 
 		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			fmt.Println("Error reading from client: ", err.Error())
-			os.Exit(1)
+			fmt.Println(err)
+			return
+		} else {
+			fmt.Println("No errors observed during parsing input")
 		}
-		connection.Write([]byte("+Ok\r\n"))
+		fmt.Println(value)
+		connection.Write([]byte("+OK\r\n"))
 	}
 }
 
