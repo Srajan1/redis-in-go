@@ -40,5 +40,4 @@ Dalinar    # Token itself
 ```
 This sets the admin as [Dalinar](https://stormlightarchive.fandom.com/wiki/Dalinar_Kholin)
 
-Similarly when we do `GET ADMIN`. Server returns `$7\r\nDalinar\r\n`
-
+Similarly when we do `GET ADMIN`. Server returns `$7\r\nDalinar\r\n`. Also, converting a data structure into a byte slice is called Marshalling.

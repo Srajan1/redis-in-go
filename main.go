@@ -34,9 +34,8 @@ func setupRedisServer() {
 		if err != nil {
 			fmt.Println(err)
 			return
-		} else {
-			fmt.Println("No errors observed during parsing input")
 		}
+
 		fmt.Println(value)
 		connection.Write([]byte("+OK\r\n"))
 	}
