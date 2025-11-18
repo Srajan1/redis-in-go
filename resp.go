@@ -57,6 +57,8 @@ func (r *Resp) Read() (Value, error) {
 		return Value{}, error
 	}
 
+	fmt.Println("Encountered type", string(_type))
+
 	switch _type {
 	case ARRAY:
 		return r.readArray()
@@ -101,14 +103,14 @@ func (r *Resp) readArray() (Value, error) {
 	v.typ = "array"
 
 	size, err := r.readInteger()
-	// fmt.Println("Size is ", size)
+	fmt.Println("Size is ", size)
 
 	if err != nil {
-		fmt.Printf("Error reading size of array", err)
-		return Value{}, err
+		fmt.Println("Error reading size of array", err)
+		return v, err
 	}
 
-	v.array = make([]Value, size)
+	v.array = make([]Value, 0)
 
 	for i := 0; i < size; i++ {
 		val, err := r.Read()
@@ -133,7 +135,7 @@ func (r *Resp) readBulk() (Value, error) {
 		return v, err
 	}
 
-	// fmt.Println("length of bulk", len)
+	fmt.Println("length of bulk", len)
 
 	bulk := make([]byte, len)
 
